@@ -1,0 +1,4 @@
+*.log
+*.npz
+*.pth
+mit-bih-atrial-fibrillation-database-1.0.0/
