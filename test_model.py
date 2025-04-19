@@ -56,7 +56,9 @@ if __name__ == "__main__":
 
     # Model input size (same as training)
     # H_in, W_in = 12, 1280
-    H_in, W_in = 12, 256
+    # H_in, W_in = 12, 256
+    
+    # H_in, W_in = 12, 192
 
     # Load best model checkpoint
     if os.path.exists(CHECKPOINT_PATH):

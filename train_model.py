@@ -8,7 +8,7 @@ from dataset_loader import CustomDataset
 from torch.utils.data import DataLoader
 
 # Directory to store checkpoints
-CHECKPOINT_DIR = "checkpoints"
+CHECKPOINT_DIR = "checkpoints_128"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 # Early stopping parameters
@@ -108,13 +108,13 @@ def train_model(model, train_loader, criterion, optimizer, num_epochs=10):
 # Load data
 if __name__ == "__main__":
     # Create an instance of the dataset
-    dataset = CustomDataset(data_dir='dataset/train/train_data.npz')
+    dataset = CustomDataset(data_dir='dataset_128/train/train.npz')
 
     # Create a DataLoader instance to load the dataset in batches
     train_loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
     
     # H_in, W_in = 12, 1280
-    H_in, W_in = 12, 256
+    H_in, W_in = 12, 192
     model = DCNN(H_in, W_in)
     
     criterion = nn.CrossEntropyLoss()

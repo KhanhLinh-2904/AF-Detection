@@ -1,9 +1,14 @@
 import numpy as np
 
-def remove_ectopic_beats_and_segment(rr_intervals, segment_length=128):
+def remove_ectopic_beats(rr_intervals):
     rr = np.array(rr_intervals)
+    # Bỏ các giá trị không hợp lệ
+    rr = rr[~np.isnan(rr)]
+    rr = rr[np.isfinite(rr)]
+    rr = rr[rr > 0]
+
     rr_ratios = rr[1:] / rr[:-1]
-    
+    # print(rr_ratios)
     # Tính percentiles để phát hiện nhịp ngoại tâm thu
     perc1 = np.percentile(rr_ratios, 1)
     perc99 = np.percentile(rr_ratios, 99)
@@ -22,9 +27,7 @@ def remove_ectopic_beats_and_segment(rr_intervals, segment_length=128):
             clean_rr.append(rr[i])
             i += 1
 
-    # Chia chuỗi thành các đoạn 128 RR
-    segments = [clean_rr[i:i + segment_length] for i in range(0, len(clean_rr) - segment_length + 1, segment_length)]
-    return segments
+    return clean_rr
 
 def compute_rmssd(rr_segment):
     rr = np.array(rr_segment)
@@ -50,30 +53,29 @@ def compute_shannon_entropy(rr_segment, bins=16):
     
     hist, _ = np.histogram(trimmed_rr, bins=bins, density=False)
     probabilities = hist / np.sum(hist)
-    se = -np.sum([p * np.log(p) for p in probabilities if p > 0]) / np.log(bins)
+    se = -np.sum([p * np.log(p) for p in probabilities if p > 0]) / np.log(1/bins)
     return se
 
 def define_AF_or_none(segment):
     rmssd = compute_rmssd(segment)
     tpr = compute_tpr(segment)
     se = compute_shannon_entropy(segment)
-    if (rmssd > 0.1) and (0.54 < tpr < 0.77) and (se > 0.7):
-        return "AF"
-        
+    if (rmssd > 0.1) or (0.54 < tpr < 0.77) and (se > 0.7):
+        return 1    
     else:
-        return "non_AF"
+        return 0
 
 if __name__ == "__main__":
     # Giả sử bạn có RR intervals từ thiết bị đo ECG
     rr_intervals = np.random.normal(0.8, 0.05, 10000)  # ví dụ dữ liệu
 
-    segments = remove_ectopic_beats_and_segment(rr_intervals)
+    segments = remove_ectopic_beats(rr_intervals)
 
     for segment in segments:
         rmssd = compute_rmssd(segment)
         tpr = compute_tpr(segment)
         se = compute_shannon_entropy(segment)
-        if (rmssd > 0.1) and (0.54 < tpr < 0.77) and (se > 0.7):
+        if (rmssd > 0.1) or (0.54 < tpr < 0.77) or (se > 0.7):
             print(f"AF")
             
         else:

@@ -1,0 +1,773 @@
+====================================================
+Processing record: 07162
+ann.sample:  [174]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  128 256 174
+auto_label vs manual_label in ecg1:  0 1
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  128 256 174
+auto_label vs manual_label in ecg1:  0 1
+====================================================
+Processing record: 05261
+ann.sample:  [    104 2162708 2163556 4057942 4062020 4387405 4400369 5497141 5500961
+ 5586022 5587002 5593100 5596162 5707701 5712201 5764404 5766060 6484710
+ 6567195 6598300 6602555 7405319 7406544]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 104
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2162688 2162816 2162708
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2163456 2163584 2163556
+auto_label vs manual_label in ecg1:  1 0
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 104
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2162688 2162816 2162708
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2163456 2163584 2163556
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  4057856 4057984 4057942
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  4061952 4062080 4062020
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  4387328 4387456 4387405
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  4400256 4400384 4400369
+auto_label vs manual_label in ecg1:  1 0
+====================================================
+Processing record: 04043
+ann.sample:  [     68  266498  376328 2585284 2602516 2634911 2739812 2745162 2779581
+ 2834739 2841728 3119235 3121706 3324526 3352183 3607124 3637519 3665624
+ 3680630 3690356 3707032 3714455 3729454 3757893 3850173 3864338 3882086
+ 3911965 3939729 3947348 3992719 4002976 4067053 4100718 4135455 4144613
+ 4180313 4184151 4207223 4216965 4232561 4397189 4429652 4469008 4475226
+ 4484786 4508435 4527258 4551868 4572558 4602709 4627077 4636998 4650429
+ 4700108 4846373 4859020 4977503 5001899 5025436 5047415 5064396 5076309
+ 5093223 5105440 5122383 5136042 5143706 5152531 5223157 5237640 5245920
+ 5258589 5269137 5310430 5328717 5383211 5412443 5446749 5481762 5504398
+ 5518464 5535882 5559927 5576037 5592280 5633072 5668367 5685492 5713187
+ 5719861 5746977 5774762 5797297 5822969 5859230 5866172 5891680 5931746
+ 6129598 6142319 6167966 6200373 6254934 6273886 6378723 6404594 6530475
+ 6538181 6562320 6574834 6681068 6701453 6749285 6762698 6793370 6796579
+ 7083332 7099954 7202179 7253976 7312817 7338002 7436858 7450331 7471557
+ 7477469 7511862 7514586 7537962 7555566 7605110 7621970 7659426 7669199
+ 7672424 7737044 7769644 7826178 7841413 8012816 8028178 8048250 8049795
+ 8069401 8089735 8198085 8218288 8256562 8262299 8355804 8362313 8411314
+ 8471313 8693472 8707104 8732495 8752736 8788100 8801688 8874298 8884575
+ 8910970 8921519 8952011 8981286]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 68
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  266496 266624 266498
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  376320 376448 376328
+auto_label vs manual_label in ecg1:  0 0
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 68
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  266496 266624 266498
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  376320 376448 376328
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2585216 2585344 2585284
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2602496 2602624 2602516
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2634880 2635008 2634911
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2739712 2739840 2739812
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2745088 2745216 2745162
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2779520 2779648 2779581
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2834688 2834816 2834739
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2841600 2841728 2841728
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2841728 2841856 2841728
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  3119232 3119360 3119235
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  3121664 3121792 3121706
+auto_label vs manual_label in ecg1:  0 0
+====================================================
+Processing record: 06426
+ann.sample:  [     37  526603  534235  556304  580089 1141939 1171384 1237711 1238230
+ 1260913 1269656 1279294 1306072 1321073 1861732 1883236 1884276 1958340
+ 1969009 1973372 1983161 1989878 2025147 2037856 2311118 2325600 2339127
+ 2351379 2356314 2376449 2394949 2403427 2422236 2436612 2595566 2613266
+ 2808842 2831335 3041405 3054861 3208997 3218947 4067639 4068225 4072555
+ 4097666 4098047 4108663 4307773 4317264 6143603 6144209 6173823 6178529
+ 6188862]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 37
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  526592 526720 526603
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  534144 534272 534235
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  556288 556416 556304
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  579968 580096 580089
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1141888 1142016 1141939
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1171328 1171456 1171384
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1237632 1237760 1237711
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1238144 1238272 1238230
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1260800 1260928 1260913
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1269632 1269760 1269656
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1279232 1279360 1279294
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1305984 1306112 1306072
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1320960 1321088 1321073
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1861632 1861760 1861732
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1883136 1883264 1883236
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1884160 1884288 1884276
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1958272 1958400 1958340
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1968896 1969024 1969009
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1973248 1973376 1973372
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1983104 1983232 1983161
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1989760 1989888 1989878
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2025088 2025216 2025147
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2037760 2037888 2037856
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2311040 2311168 2311118
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2325504 2325632 2325600
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2339072 2339200 2339127
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2351360 2351488 2351379
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2356224 2356352 2356314
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2376448 2376576 2376449
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2394880 2395008 2394949
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2403328 2403456 2403427
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2422144 2422272 2422236
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2436608 2436736 2436612
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2595456 2595584 2595566
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2613248 2613376 2613266
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2808832 2808960 2808842
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2831232 2831360 2831335
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  3041280 3041408 3041405
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  3054848 3054976 3054861
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  3208960 3209088 3208997
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  3218944 3219072 3218947
+auto_label vs manual_label in ecg1:  0 1
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 37
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  526592 526720 526603
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  534144 534272 534235
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  556288 556416 556304
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  579968 580096 580089
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1141888 1142016 1141939
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1171328 1171456 1171384
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1237632 1237760 1237711
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1238144 1238272 1238230
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1260800 1260928 1260913
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1269632 1269760 1269656
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1279232 1279360 1279294
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1305984 1306112 1306072
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1320960 1321088 1321073
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1861632 1861760 1861732
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1883136 1883264 1883236
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1884160 1884288 1884276
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1958272 1958400 1958340
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1968896 1969024 1969009
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1973248 1973376 1973372
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1983104 1983232 1983161
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1989760 1989888 1989878
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2025088 2025216 2025147
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2037760 2037888 2037856
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2311040 2311168 2311118
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2325504 2325632 2325600
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2339072 2339200 2339127
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2351360 2351488 2351379
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2356224 2356352 2356314
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2376448 2376576 2376449
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2394880 2395008 2394949
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2403328 2403456 2403427
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2422144 2422272 2422236
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2436608 2436736 2436612
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2595456 2595584 2595566
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2613248 2613376 2613266
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2808832 2808960 2808842
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2831232 2831360 2831335
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  3041280 3041408 3041405
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  3054848 3054976 3054861
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  3208960 3209088 3208997
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  3218944 3219072 3218947
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  4067584 4067712 4067639
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  4068224 4068352 4068225
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  4072448 4072576 4072555
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  4097664 4097792 4097666
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  4097920 4098048 4098047
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  4108544 4108672 4108663
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  4307712 4307840 4307773
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  4317184 4317312 4317264
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  6143488 6143616 6143603
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  6144128 6144256 6144209
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  6173696 6173824 6173823
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  6178432 6178560 6178529
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  6188800 6188928 6188862
+auto_label vs manual_label in ecg1:  0 1
+====================================================
+Processing record: 08405
+ann.sample:  [     72 2545096 2549499 2562781]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 72
+auto_label vs manual_label in ecg1:  0 0
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 72
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2545024 2545152 2545096
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2549376 2549504 2549499
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2562688 2562816 2562781
+auto_label vs manual_label in ecg1:  0 1
+====================================================
+Processing record: 04746
+ann.sample:  [     62 1097510 1098684 2284261 2285672 2319586 2326154 2608376 5696115
+ 5705521 7496881]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 62
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1097472 1097600 1097510
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1098624 1098752 1098684
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2284160 2284288 2284261
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2285568 2285696 2285672
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2319488 2319616 2319586
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2326144 2326272 2326154
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2608256 2608384 2608376
+auto_label vs manual_label in ecg1:  1 1
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 62
+auto_label vs manual_label in ecg1:  0 0
+====================================================
+Processing record: 05091
+ann.sample:  [     79 1633050 1633999 1900120 1901525 2270154 2270587 2574098 2575190
+ 2591265 2593950 2618884 2619973 2877400 2880801 4350349 4360987]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 79
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1633024 1633152 1633050
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1633920 1634048 1633999
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1900032 1900160 1900120
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1901440 1901568 1901525
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2270080 2270208 2270154
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2270464 2270592 2270587
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2574080 2574208 2574098
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2575104 2575232 2575190
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2591232 2591360 2591265
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2593920 2594048 2593950
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2618880 2619008 2618884
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2619904 2620032 2619973
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2877312 2877440 2877400
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2880768 2880896 2880801
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  4350336 4350464 4350349
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  4360960 4361088 4360987
+auto_label vs manual_label in ecg1:  0 0
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 79
+auto_label vs manual_label in ecg1:  0 0
+====================================================
+Processing record: 08455
+ann.sample:  [     96 2808396 2820743 2850351]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 96
+auto_label vs manual_label in ecg1:  0 0
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 96
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2808320 2808448 2808396
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2820736 2820864 2820743
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2850304 2850432 2850351
+auto_label vs manual_label in ecg1:  0 1
+====================================================
+Processing record: 04015
+ann.sample:  [     30  102584  119604  121773  122194  133348  166857 1096245 1098054
+ 1135296 1139595 1422436 1423548 1459277 1460416]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 30
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  102528 102656 102584
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  119552 119680 119604
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  121728 121856 121773
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  122112 122240 122194
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  133248 133376 133348
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  166784 166912 166857
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1096192 1096320 1096245
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1097984 1098112 1098054
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1135232 1135360 1135296
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1139584 1139712 1139595
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1422336 1422464 1422436
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1423488 1423616 1423548
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1459200 1459328 1459277
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1460352 1460480 1460416
+auto_label vs manual_label in ecg1:  0 0
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 30
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  102528 102656 102584
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  119552 119680 119604
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  121728 121856 121773
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  122112 122240 122194
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  133248 133376 133348
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  166784 166912 166857
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1096192 1096320 1096245
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1097984 1098112 1098054
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1135232 1135360 1135296
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1139584 1139712 1139595
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1422336 1422464 1422436
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1423488 1423616 1423548
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1459200 1459328 1459277
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1460352 1460480 1460416
+auto_label vs manual_label in ecg1:  0 0
+====================================================
+Processing record: 04936
+ann.sample:  [     42  413691  447761 1023430 1027876 1091766 1105884 1115502 1151702
+ 1174135 1189343 1203805 1204431 1205494 1316329 1333475 1352712 1364357
+ 1382500 1393567 1406691 1430321 1668404 1694048 1890996 1904539 1905745
+ 1936943 2047170 2068111 2102388 2119395 2138828 2147935 2280889 2303975
+ 2464067 2494806 2498353 2506461 3130658 3165666 4753217 4781740 4792439
+ 4804448 4901634 4917777 5080723 5100410 5110361 5118731 5523273 5548092
+ 5687293 5724606 5953276 5981405 5984044 5990301 5992459 5995465 7325787
+ 7366279 7453005 7490747 7582421 7609874 7612044 7619457 8269228 8311034
+ 8358031]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 42
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  413568 413696 413691
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  447744 447872 447761
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1023360 1023488 1023430
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1027840 1027968 1027876
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1091712 1091840 1091766
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1105792 1105920 1105884
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1115392 1115520 1115502
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1151616 1151744 1151702
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1174016 1174144 1174135
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1189248 1189376 1189343
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1203712 1203840 1203805
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1204352 1204480 1204431
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1205376 1205504 1205494
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1316224 1316352 1316329
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1333376 1333504 1333475
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1352704 1352832 1352712
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1364352 1364480 1364357
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1382400 1382528 1382500
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1393536 1393664 1393567
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1406592 1406720 1406691
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1430272 1430400 1430321
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1668352 1668480 1668404
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1693952 1694080 1694048
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1890944 1891072 1890996
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1904512 1904640 1904539
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1905664 1905792 1905745
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1936896 1937024 1936943
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2047104 2047232 2047170
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2068096 2068224 2068111
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2102272 2102400 2102388
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2119296 2119424 2119395
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2138752 2138880 2138828
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2147840 2147968 2147935
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2280832 2280960 2280889
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2303872 2304000 2303975
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2464000 2464128 2464067
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2494720 2494848 2494806
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  2498304 2498432 2498353
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  2506368 2506496 2506461
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  3130624 3130752 3130658
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  3165568 3165696 3165666
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  4753152 4753280 4753217
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  4781696 4781824 4781740
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  4792320 4792448 4792439
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  4804352 4804480 4804448
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  4901632 4901760 4901634
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  4917760 4917888 4917777
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  5080704 5080832 5080723
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  5100288 5100416 5100410
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  5110272 5110400 5110361
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  5118720 5118848 5118731
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  5523200 5523328 5523273
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  5548032 5548160 5548092
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  5687168 5687296 5687293
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  5724544 5724672 5724606
+auto_label vs manual_label in ecg1:  1 1
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 42
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  413568 413696 413691
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  447744 447872 447761
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1023360 1023488 1023430
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1027840 1027968 1027876
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1091712 1091840 1091766
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1105792 1105920 1105884
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1115392 1115520 1115502
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1151616 1151744 1151702
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1174016 1174144 1174135
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  1189248 1189376 1189343
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1203712 1203840 1203805
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1204352 1204480 1204431
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1205376 1205504 1205494
+auto_label vs manual_label in ecg1:  0 1
+====================================================
+Processing record: 08378
+ann.sample:  [     93  604953  724335  742007 2281342 4315100 4582415 4602354 4868966
+ 4877160 4963329 4977273 4988716 4995131 5016174 5949876 5951406]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 93
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  604928 605056 604953
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  724224 724352 724335
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  741888 742016 742007
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2281216 2281344 2281342
+auto_label vs manual_label in ecg1:  0 0
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 93
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  604928 605056 604953
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  724224 724352 724335
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  741888 742016 742007
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2281216 2281344 2281342
+auto_label vs manual_label in ecg1:  0 0
+====================================================
+Processing record: 06995
+ann.sample:  [      7 1381607 1383575 1387965 1389204 1399238 1856046 1864114 3789346
+ 3793222 6274349]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 7
+auto_label vs manual_label in ecg1:  0 1
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 7
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1381504 1381632 1381607
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1383552 1383680 1383575
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1387904 1388032 1387965
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1389184 1389312 1389204
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1399168 1399296 1399238
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1856000 1856128 1856046
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1864064 1864192 1864114
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  3789312 3789440 3789346
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  3793152 3793280 3793222
+auto_label vs manual_label in ecg1:  0 0
+Skipping 04048: Missing .hea or .atr file.
+Skipping 06453: Missing .hea or .atr file.
+====================================================
+Processing record: 07879
+ann.sample:  [     54 1783080 7333067 7334783 7335468]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 54
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1783040 1783168 1783080
+auto_label vs manual_label in ecg1:  0 1
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 54
+auto_label vs manual_label in ecg1:  0 0
+====================================================
+Processing record: 07859
+ann.sample:  [43]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 43
+auto_label vs manual_label in ecg1:  1 1
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 43
+auto_label vs manual_label in ecg1:  1 1
+====================================================
+Processing record: 07910
+ann.sample:  [    103  806384  864893 1758668 1760363 1881846 2322142 2556411 2558625
+ 8241169]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 103
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  806272 806400 806384
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  864768 864896 864893
+auto_label vs manual_label in ecg1:  0 0
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  0 128 103
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  806272 806400 806384
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  864768 864896 864893
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  1758592 1758720 1758668
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1760256 1760384 1760363
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  1881728 1881856 1881846
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2322048 2322176 2322142
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  2556288 2556416 2556411
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  2558592 2558720 2558625
+auto_label vs manual_label in ecg1:  0 0
+Skipping 08219: Missing .hea or .atr file.
+====================================================
+Processing record: 04126
+ann.sample:  [    154   11388  138152  171592  191328  252786  322908  748262  847441
+ 7832273 7836542 8273014 8291855 8307657 8313239]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  128 256 154
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  11264 11392 11388
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  138112 138240 138152
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  171520 171648 171592
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  191232 191360 191328
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  252672 252800 252786
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  322816 322944 322908
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  748160 748288 748262
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  847360 847488 847441
+auto_label vs manual_label in ecg1:  1 0
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  128 256 154
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  11264 11392 11388
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  138112 138240 138152
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  171520 171648 171592
+auto_label vs manual_label in ecg1:  1 1
+start_idx vs end_idx vs ann.sample[j]:  191232 191360 191328
+auto_label vs manual_label in ecg1:  0 0
+start_idx vs end_idx vs ann.sample[j]:  252672 252800 252786
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  322816 322944 322908
+auto_label vs manual_label in ecg1:  0 0
+====================================================
+Processing record: 08215
+ann.sample:  [    158 1774708 3204435 3216995]
+***********ECG 1*************
+start_idx vs end_idx vs ann.sample[j]:  128 256 158
+auto_label vs manual_label in ecg1:  1 0
+start_idx vs end_idx vs ann.sample[j]:  1774592 1774720 1774708
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  3204352 3204480 3204435
+auto_label vs manual_label in ecg1:  0 1
+start_idx vs end_idx vs ann.sample[j]:  3216896 3217024 3216995
+auto_label vs manual_label in ecg1:  0 1
+***********ECG 2*************
+start_idx vs end_idx vs ann.sample[j]:  128 256 158
+auto_label vs manual_label in ecg1:  1 0
