@@ -5,6 +5,37 @@ import os
 from sklearn.model_selection import train_test_split
 from scipy.signal import filtfilt, ellip
 from remove_etopic import remove_ectopic_beats
+from visualization import plot_ecg_segment
+
+def segment_rr_intervals_with_labels(rr_intervals, ground_truth, target_sum=5.0, tolerance=1e-2):
+    rr_segments = []
+    label_segments = []
+
+    current_rr_segment = []
+    current_label_segment = []
+    current_sum = 0.0
+
+    for rr, label in zip(rr_intervals, ground_truth):
+        print("rr: ", rr)
+        if current_sum + rr <= target_sum + tolerance:
+            current_rr_segment.append(rr)
+            current_label_segment.append(label)
+            current_sum += rr
+        else:
+            if current_rr_segment:
+                plot_ecg_segment(current_rr_segment, "N")
+                rr_segments.append(current_rr_segment)
+                label_segments.append(current_label_segment)
+
+            current_rr_segment = [rr]
+            current_label_segment = [label]
+            current_sum = rr
+
+    if current_rr_segment:
+        rr_segments.append(current_rr_segment)
+        label_segments.append(current_label_segment)
+
+    return rr_segments, label_segments
 
 def extractData(ann_atr, ann_qrs, ecg):
     # ann.sample contains the indices of the QRS annotations
@@ -37,13 +68,18 @@ def extractData(ann_atr, ann_qrs, ecg):
         else:
             ground_truth_full[ground_idx1:ground_idx2] = 0
     ground_truth_filtered = ground_truth_full[kept_indices]
-    modulus = len(RR_intervals_remove_etopic) % 128
-    segment =  RR_intervals_remove_etopic[:len(RR_intervals_remove_etopic) - modulus]
-    segment_128 = segment.reshape((-1, 128))
-    ground_truth_segment = ground_truth_filtered[:len(ground_truth_filtered) - modulus]
-    reshaped_truth = ground_truth_segment.reshape((-1,128))
-    reshaped_truth = np.sum(reshaped_truth, axis=1) > (128 / 2)
-    return segment_128, reshaped_truth, RR_intervals_remove_etopic
+
+    segment, label_segment = segment_rr_intervals_with_labels(RR_intervals_remove_etopic, ground_truth_filtered)
+    # print("segment: ", len(segment))
+    # print("****: ", label_segment)
+    # print("label_segment: ", len(label_segment))
+    for i in range(len(label_segment)):
+        small_label = label_segment[i]
+        if  np.sum(small_label) >= (len(small_label)/2):
+            label_segment[i] = 1
+        else:
+            label_segment[i] = 0
+    return segment, label_segment, RR_intervals_remove_etopic
 
 def elliptical_bandpass_filter(segment, fs, order=10, lowcut=0.5, highcut=50):
     """
@@ -81,22 +117,22 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
     train_dir = os.path.join(output_dir, "train")
     test_dir = os.path.join(output_dir, "test")
     val_dir = os.path.join(output_dir, "val")
-    train_file = os.path.join(train_dir, "train_data.npz")
-    test_file = os.path.join(test_dir, "test_data.npz")
-    val_file = os.path.join(val_dir, "val_data.npz")
+    train_file = os.path.join(train_dir, "train.npz")
+    test_file = os.path.join(test_dir, "test.npz")
+    val_file = os.path.join(val_dir, "val.npz")
 
-    # Check if data is already processed
-    if os.path.exists(train_file) and os.path.exists(test_file) and os.path.exists(val_file):
-        print("Processed data found. Loading data...")
+    # # Check if data is already processed
+    # if os.path.exists(train_file) and os.path.exists(test_file) and os.path.exists(val_file):
+    #     print("Processed data found. Loading data...")
 
-        train_data = np.load(train_file)
-        test_data = np.load(test_file)
-        val_data = np.load(val_file)
-        X_train, y_train = train_data["all_segments"], train_data["all_labels"]
-        X_test, y_test = test_data["all_segments"], test_data["all_labels"]
-        X_val, y_val = test_data["all_segments"], test_data["all_labels"]
-        print("Data loaded successfully.")
-        return X_train, y_train, X_test, y_test, X_val, y_val
+    #     train_data = np.load(train_file, allow_pickle=True)
+    #     test_data = np.load(test_file, allow_pickle=True)
+    #     val_data = np.load(val_file, allow_pickle=True)
+    #     X_train, y_train = train_data["all_segments"], train_data["all_labels"]
+    #     X_test, y_test = test_data["all_segments"], test_data["all_labels"]
+    #     X_val, y_val = test_data["all_segments"], test_data["all_labels"]
+    #     print("Data loaded successfully.")
+    #     return X_train, y_train, X_test, y_test, X_val, y_val
 
     print("Processed data not found. Processing raw ECG data...")
 
@@ -107,7 +143,7 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
     
 
     manual_label = []
-    segment128 = []
+    segment5second = []
     record_files = [f.split('.')[0] for f in os.listdir(data_path) if f.endswith('.dat')]
     for record_name in record_files:
         hea_path = os.path.join(data_path, record_name + ".hea")
@@ -131,25 +167,37 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
         ann_qrs = wfdb.rdann(os.path.join(data_path, record_name), 'qrs')
         ecg1 = record1.p_signal.flatten()
         fs = record1.fs # frequency
-        segment_128, reshaped_truth, RR_intervals = extractData(ann_atr, ann_qrs, ecg1)
+        segment_5s, label_5s, RR_intervals = extractData(ann_atr, ann_qrs, ecg1)
         
-        segment128.append(segment_128)
-        manual_label.extend(reshaped_truth)
-        # print("segment_128: ", segment_128.shape)
-        print("reshaped_truth: ", reshaped_truth)
+        segment5second.extend(segment_5s)
+        manual_label.extend(label_5s)
+    #     # print("segment_128: ", segment_128.shape)
+    #     print("reshaped_truth: ", reshaped_truth)
 
         
         
         record2 = wfdb.rdrecord(os.path.join(data_path, record_name), channels=[1]) 
         ecg2 = record2.p_signal.flatten()
-        segment_128, reshaped_truth, RR_intervals = extractData(ann_atr, ann_qrs, ecg2)
+        segment_5s, label_5s, RR_intervals = extractData(ann_atr, ann_qrs, ecg2)
         # print("!!!!! segment: ", segment_128.shape)
-        segment128.append(segment_128)
-        manual_label.extend(reshaped_truth)
+        segment5second.extend(segment_5s)
+        manual_label.extend(label_5s)
         
-    segment128 = np.vstack(segment128)
-    print("segment128: ", segment128.shape)  
-    print("manual_label: ", len(manual_label) )
+    # # segment5second = np.vstack(segment5second)
+    # print("segment5second: ", len(segment5second)) 
+    # print("manual_label: ", len(manual_label) )
+    # np.savez('segments_labels.npz',
+    #      segment5second=np.array(segment5second, dtype=object),
+    #      manual_label=np.array(manual_label))
+def classfify_data():
+    data = np.load("segments_labels.npz", allow_pickle=True)
+    # Access arrays
+    segment5second = data['segment5second']
+    manual_label = data['manual_label']
+
+    # Example: print the first segment and label
+    print("First segment:", segment5second[0])
+    print("First label:", manual_label[0])
     all_AF_labels = []
     all_AF_segments = []
     all_non_labels = []
@@ -157,22 +205,22 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
     for i in range(len(manual_label)):
         if manual_label[i]:
             all_AF_labels.append(1)
-            all_AF_segments.append(segment128[i,:])
+            all_AF_segments.append(segment5second[i])
         else:
             all_non_labels.append(0)
-            all_non_segments.append(segment128[i,:])
+            all_non_segments.append(segment5second[i])
   
-    np.savez('af_data.npz',
+    np.savez('af_data_2.npz',
          all_AF_labels=np.array(all_AF_labels),
-         all_AF_segments=np.array(all_AF_segments),
+         all_AF_segments=np.array(all_AF_segments, dtype=object),
          all_non_labels=np.array(all_non_labels),
-         all_non_segments=np.array(all_non_segments))
+         all_non_segments=np.array(all_non_segments, dtype=object))
     # Xử lý file af_data.npz
 def read_af_data():
     all_segments = []
     all_labels = []
-    data_dir = "af_data.npz"
-    data = np.load(data_dir)
+    data_dir = "af_data_2.npz"
+    data = np.load(data_dir, allow_pickle=True)
     all_AF_labels = data["all_AF_labels"]
     all_AF_segments = data["all_AF_segments"]
     all_non_labels = data["all_non_labels"]
@@ -196,7 +244,7 @@ def read_af_data():
     all_labels.extend(all_AF_labels)
     
     # Convert lists to NumPy arrays
-    all_segments = np.array(all_segments)  # Shape: (num_segments, 5*fs, 2)
+    all_segments = np.array(all_segments, dtype=object)  # Shape: (num_segments, 5*fs, 2)
     all_labels = np.array(all_labels)
     print("all_segments: ", all_segments.shape)
     print("all_labels: ", all_labels.shape)
@@ -243,5 +291,6 @@ if __name__ == "__main__":
     # print("N test:",len(num_N))
     # print("A test:",len(num_A))
 
-    # load_or_process_ecg_data()
-    read_af_data()
+    load_or_process_ecg_data()
+    # classfify_data()
+    # read_af_data()

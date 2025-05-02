@@ -14,7 +14,7 @@ class CustomDataset(Dataset):
         self.transform = transform
         
         # Load the npz file containing 'all_segments' and 'all_labels'
-        data = np.load(data_dir)
+        data = np.load(data_dir, allow_pickle=True)
         print(data.files)  # Print the keys in the .npz file to understand its structure
         
         # Assuming 'all_segments' and 'all_labels' are the correct keys

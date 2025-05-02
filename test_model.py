@@ -21,7 +21,7 @@ def load_accuracy(folder_path,dataset_128):
     # Load test dataset
     get_dataset = CustomDataset(data_dir=dataset_128)  # Update with actual test dataset
     get_loader = DataLoader(get_dataset, batch_size=32, shuffle=False, num_workers=4)
-    H_in, W_in = 12, 192
+    H_in, W_in = 12, 64
     list_accs = []
     epochs = []
 
@@ -58,7 +58,7 @@ def load_test_performance():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     test_dataset = CustomDataset(data_dir='dataset_128/test/test.npz')  # Update with actual test dataset
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
-    H_in, W_in = 12, 192
+    H_in, W_in = 12, 64
     CHECKPOINT_PATH = "checkpoints_128/best_model.pth"
     # Load best model checkpoint
     if os.path.exists(CHECKPOINT_PATH):

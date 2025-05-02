@@ -38,8 +38,8 @@ def remove_ectopic_beats(rr_intervals, return_indices=False):
 
     clean_rr = np.array(clean_rr)
     kept_indices = np.array(kept_indices)
-    print("kept_indices: ", kept_indices)
-    print("len of kept_indices: ", len(kept_indices))
+    # print("kept_indices: ", kept_indices)
+    # print("len of kept_indices: ", len(kept_indices))
     
     if return_indices:
         return clean_rr, kept_indices
