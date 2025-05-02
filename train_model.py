@@ -23,16 +23,19 @@ def get_latest_checkpoint():
     return os.path.join(CHECKPOINT_DIR, checkpoints[-1])
 
 # Training function with checkpoint saving
-def train_model(model, train_loader, criterion, optimizer, num_epochs=10):
+def train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=100):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
     start_epoch = 0
-    best_loss = float("inf")
+    best_val_loss = float("inf")
     best_epoch = 0
-    loss_history = []
+    train_losses = []
+    val_losses = []
     no_improve_epochs = 0
 
+    os.makedirs(CHECKPOINT_DIR, exist_ok=True)
+    
     # Load latest checkpoint if available
     latest_checkpoint = get_latest_checkpoint()
     if latest_checkpoint:
@@ -45,25 +48,37 @@ def train_model(model, train_loader, criterion, optimizer, num_epochs=10):
         print(f"Resuming training from epoch {start_epoch}")
 
     for epoch in range(start_epoch, num_epochs):
+        # --- Training ---
         model.train()
-        running_loss = 0.0
-
+        train_loss = 0.0
         for inputs, labels in train_loader:
-            # print("input: ", inputs.shape)
-            inputs = inputs.unsqueeze(1)  # Ensure correct input shape
-            inputs, labels = inputs.to(device).float(), labels.to(device)
+            inputs = inputs.unsqueeze(1).to(device).float()
+            labels = labels.to(device)
 
             optimizer.zero_grad()
             outputs = model(inputs)
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
+            train_loss += loss.item()
+        avg_train_loss = train_loss / len(train_loader)
+        train_losses.append(avg_train_loss)
 
-            running_loss += loss.item()
+        # --- Validation ---
+        model.eval()
+        val_loss = 0.0
+        with torch.no_grad():
+            for inputs, labels in val_loader:
+                inputs = inputs.unsqueeze(1).to(device).float()
+                labels = labels.to(device)
 
-        avg_loss = running_loss / len(train_loader)
-        loss_history.append(avg_loss)
-        print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {avg_loss:.4f}")
+                outputs = model(inputs)
+                loss = criterion(outputs, labels)
+                val_loss += loss.item()
+        avg_val_loss = val_loss / len(val_loader)
+        val_losses.append(avg_val_loss)
+
+        print(f"Epoch [{epoch+1}/{num_epochs}] - Train Loss: {avg_train_loss:.4f}, Val Loss: {avg_val_loss:.4f}")
 
         # Save checkpoint
         checkpoint_path = os.path.join(CHECKPOINT_DIR, f"epoch_{epoch+1}.pth")
@@ -71,52 +86,52 @@ def train_model(model, train_loader, criterion, optimizer, num_epochs=10):
             'epoch': epoch,
             'model_state': model.state_dict(),
             'optimizer_state': optimizer.state_dict(),
-            'loss': avg_loss,
-            'best_loss': best_loss,
+            'train_loss': avg_train_loss,
+            'val_loss': avg_val_loss,
+            'best_val_loss': best_val_loss,
             'best_epoch': best_epoch
         }, checkpoint_path)
-        print(f"Checkpoint saved: {checkpoint_path}")
 
-        # Track best model
-        if avg_loss < best_loss:
-            best_loss = avg_loss
+        # Track best validation model
+        if avg_val_loss < best_val_loss:
+            best_val_loss = avg_val_loss
             best_epoch = epoch + 1
-            no_improve_epochs = 0  # Reset counter
-            torch.save(model.state_dict(), os.path.join(CHECKPOINT_DIR, "best_model.pth"))
-            print(f"New best model saved at epoch {best_epoch} with loss {best_loss:.4f}")
             no_improve_epochs = 0
+            torch.save(model.state_dict(), os.path.join(CHECKPOINT_DIR, "best_model.pth"))
+            print(f"New best model saved at epoch {best_epoch} with val loss {best_val_loss:.4f}")
         else:
             no_improve_epochs += 1
 
-        # Early stopping condition
+        # Early stopping
         if no_improve_epochs >= PATIENCE:
-            print(f"Early stopping triggered at epoch {epoch+1}. Best model was at epoch {best_epoch} with loss {best_loss:.4f}.")
+            print(f"Early stopping at epoch {epoch+1}. Best model at epoch {best_epoch} with val loss {best_val_loss:.4f}.")
             break
 
-    # Visualization of training loss
-    plt.figure(figsize=(8, 5))
-    plt.plot(range(1, len(loss_history) + 1), loss_history, marker='o', linestyle='-', label="Training Loss")
-    plt.xlabel("Epoch")
-    plt.ylabel("Loss")
-    plt.title("Training Loss Over Time")
+    # Plot training and validation loss
+    plt.figure(figsize=(10, 5))
+    plt.plot(train_losses, label='Training Loss')
+    plt.plot(val_losses, label='Validation Loss')
+    plt.title('Training and Validation Loss over Epochs')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
     plt.legend()
     plt.grid()
-    plt.savefig(os.path.join(CHECKPOINT_DIR, "training_loss.png"))
+    plot_path = os.path.join(CHECKPOINT_DIR, "loss_plot.png")
+    plt.savefig(plot_path)
     plt.show()
-    print(f"Training visualization saved as training_loss.png")
-
+    print(f"Loss plot saved at {plot_path}")
 # Load data
 if __name__ == "__main__":
     # Create an instance of the dataset
-    dataset = CustomDataset(data_dir='dataset_128/train/train.npz')
-
+    train_dataset = CustomDataset(data_dir='dataset_128/train/train.npz')
+    val_dataset =  CustomDataset(data_dir='dataset_128/val/val.npz')
     # Create a DataLoader instance to load the dataset in batches
-    train_loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
-    
+    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=4)
+    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=4)
     # H_in, W_in = 12, 1280
     H_in, W_in = 12, 192
     model = DCNN(H_in, W_in)
     
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
-    train_model(model, train_loader, criterion, optimizer, num_epochs=200)
+    train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=200)

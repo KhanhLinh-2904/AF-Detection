@@ -2,7 +2,7 @@ import numpy as np
 import pywt
 import matplotlib.pyplot as plt
 
-from test import load_or_process_ecg_data
+from test_model import load_or_process_ecg_data
 
 # Generate a sample signal (replace this with actual ECG data)
 all_segments, all_labels = load_or_process_ecg_data()
