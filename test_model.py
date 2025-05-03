@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import re
 from torch.utils.data import DataLoader
 from DCNN import DCNN
-from dataset_loader import CustomDataset
+from dataset_loader import CustomDataset, normalize
 from performance import evaluate_model
 import numpy as np
 def load_model(checkpoint_path, H_in, W_in, device):
@@ -56,10 +56,12 @@ def load_accuracy_npz(file_path="accuracy_data.npz"):
 
 def load_test_performance():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    test_dataset = CustomDataset(data_dir='dataset_128/test/test.npz')  # Update with actual test dataset
+    test_dataset = CustomDataset(data_dir='dataset/test/test.npz', transform=normalize)  # Update with actual test dataset
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
     # H_in, W_in = 12, 192
-    H_in, W_in = 12, 1280
+    H_in, W_in = 12, 256
+    
+    # H_in, W_in = 12, 1280
     
     CHECKPOINT_PATH = "checkpoints/best_model.pth"
     # Load best model checkpoint

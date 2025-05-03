@@ -11,7 +11,7 @@ def extractData(ann_atr, ann_qrs, ecg):
 
     fs = 250
     # Define the segment length in samples (5 seconds per segment)
-    segment_length = int(5 * fs)  
+    segment_length = int(1 * fs)  
     # Calculate the number of segments
     num_segments = len(ecg) // segment_length
     all_segments = []
@@ -241,5 +241,5 @@ if __name__ == "__main__":
     # print("N test:",len(num_N))
     # print("A test:",len(num_A))
 
-    # load_or_process_ecg_data()
+    load_or_process_ecg_data()
     read_af_data()

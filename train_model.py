@@ -120,13 +120,13 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
 # Load data
 if __name__ == "__main__":
     # Create an instance of the dataset
-    train_dataset = CustomDataset(data_dir='dataset/train/train.npz')
-    val_dataset =  CustomDataset(data_dir='dataset/val/val.npz')
+    train_dataset = CustomDataset(data_dir='dataset/train/train.npz',transform=normalize)
+    val_dataset =  CustomDataset(data_dir='dataset/val/val.npz', transform=normalize)
     # Create a DataLoader instance to load the dataset in batches
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=4)
     val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=4)
-    H_in, W_in = 12, 1280
-    # H_in, W_in = 12, 256
+    # H_in, W_in = 12, 1280
+    H_in, W_in = 12, 256
     
     # H_in, W_in = 12, 192
     model = DCNN(H_in, W_in)

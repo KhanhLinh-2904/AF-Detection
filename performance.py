@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 from DCNN import DCNN
-from dataset_loader import CustomDataset
+from dataset_loader import CustomDataset, normalize
 
 # Path to the best checkpoint
 CHECKPOINT_PATH = "checkpoints/best_model.pth"
@@ -57,12 +57,12 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load test dataset
-    test_dataset = CustomDataset(data_dir='dataset/test/test.npz')  # Update with actual test dataset
+    test_dataset = CustomDataset(data_dir='dataset/test/test.npz',transform=normalize)  # Update with actual test dataset
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
 
     # Model input size (same as training)
-    H_in, W_in = 12, 1280
-    # H_in, W_in = 12, 256
+    # H_in, W_in = 12, 1280
+    H_in, W_in = 12, 256
     
     # H_in, W_in = 12, 192
 
