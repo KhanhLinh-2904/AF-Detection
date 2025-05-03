@@ -9,7 +9,7 @@ from DCNN import DCNN
 from dataset_loader import CustomDataset
 
 # Path to the best checkpoint
-CHECKPOINT_PATH = "checkpoints_128/best_model.pth"
+CHECKPOINT_PATH = "checkpoints/best_model.pth"
 
 
 
@@ -57,18 +57,19 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load test dataset
-    test_dataset = CustomDataset(data_dir='dataset_128/test/test.npz')  # Update with actual test dataset
+    test_dataset = CustomDataset(data_dir='dataset/test/test.npz')  # Update with actual test dataset
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
 
     # Model input size (same as training)
-    # H_in, W_in = 12, 1280
+    H_in, W_in = 12, 1280
     # H_in, W_in = 12, 256
     
-    H_in, W_in = 12, 192
+    # H_in, W_in = 12, 192
 
     # Load best model checkpoint
     if os.path.exists(CHECKPOINT_PATH):
         model = load_model(CHECKPOINT_PATH, H_in, W_in, device)
-        sensitivity, specificity,_ = evaluate_model(model, test_loader, device)
+        sensitivity, specificity,accuracy = evaluate_model(model, test_loader, device)
+        print("sensitivity, specificity,accuracy: ", sensitivity, specificity,accuracy)
     else:
         print(f"Checkpoint not found at {CHECKPOINT_PATH}")

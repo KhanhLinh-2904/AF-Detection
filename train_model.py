@@ -4,15 +4,14 @@ import torch.optim as optim
 import os
 import matplotlib.pyplot as plt
 from DCNN import DCNN
-from dataset_loader import CustomDataset
+from dataset_loader import CustomDataset, normalize
 from torch.utils.data import DataLoader
 
 # Directory to store checkpoints
-CHECKPOINT_DIR = "checkpoints_128"
+CHECKPOINT_DIR = "checkpoints"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-# Early stopping parameters
-PATIENCE = 20  # Stop training if no improvement after X epochs
+PATIENCE = 20  # Stop if training loss doesn't improve for 20 epochs
 
 def get_latest_checkpoint():
     """Find the latest checkpoint file."""
@@ -22,30 +21,28 @@ def get_latest_checkpoint():
     checkpoints.sort(key=lambda x: int(x.split('_')[1].split('.')[0]))  # Sort by epoch number
     return os.path.join(CHECKPOINT_DIR, checkpoints[-1])
 
-# Training function with checkpoint saving
 def train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=100):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
     start_epoch = 0
-    best_val_loss = float("inf")
+    best_train_loss = float("inf")
     best_epoch = 0
     train_losses = []
     val_losses = []
     no_improve_epochs = 0
 
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
-    
-    # Load latest checkpoint if available
+
     latest_checkpoint = get_latest_checkpoint()
     if latest_checkpoint:
         checkpoint = torch.load(latest_checkpoint)
         model.load_state_dict(checkpoint['model_state'])
         optimizer.load_state_dict(checkpoint['optimizer_state'])
-        start_epoch = checkpoint['epoch'] + 1
-        best_loss = checkpoint.get('best_loss', best_loss)
-        best_epoch = checkpoint.get('best_epoch', best_epoch)
-        print(f"Resuming training from epoch {start_epoch}")
+        # Optionally resume from previous
+        # start_epoch = checkpoint['epoch'] + 1
+        # best_train_loss = checkpoint.get('best_train_loss', best_train_loss)
+        # best_epoch = checkpoint.get('best_epoch', best_epoch)
 
     for epoch in range(start_epoch, num_epochs):
         # --- Training ---
@@ -88,24 +85,24 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
             'optimizer_state': optimizer.state_dict(),
             'train_loss': avg_train_loss,
             'val_loss': avg_val_loss,
-            'best_val_loss': best_val_loss,
+            'best_train_loss': best_train_loss,
             'best_epoch': best_epoch
         }, checkpoint_path)
 
-        # Track best validation model
-        if avg_val_loss < best_val_loss:
-            best_val_loss = avg_val_loss
+        # Track best training model
+        if avg_train_loss < best_train_loss:
+            best_train_loss = avg_train_loss
             best_epoch = epoch + 1
             no_improve_epochs = 0
             torch.save(model.state_dict(), os.path.join(CHECKPOINT_DIR, "best_model.pth"))
-            print(f"New best model saved at epoch {best_epoch} with val loss {best_val_loss:.4f}")
+            print(f"New best model saved at epoch {best_epoch} with train loss {best_train_loss:.4f}")
         else:
             no_improve_epochs += 1
 
-        # Early stopping
-        if no_improve_epochs >= PATIENCE:
-            print(f"Early stopping at epoch {epoch+1}. Best model at epoch {best_epoch} with val loss {best_val_loss:.4f}.")
-            break
+        # # Early stopping
+        # if no_improve_epochs >= PATIENCE:
+        #     print(f"Early stopping at epoch {epoch+1}. Best model at epoch {best_epoch} with train loss {best_train_loss:.4f}.")
+        #     break
 
     # Plot training and validation loss
     plt.figure(figsize=(10, 5))
@@ -123,13 +120,13 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
 # Load data
 if __name__ == "__main__":
     # Create an instance of the dataset
-    train_dataset = CustomDataset(data_dir='dataset_128/train/train.npz')
-    val_dataset =  CustomDataset(data_dir='dataset_128/val/val.npz')
+    train_dataset = CustomDataset(data_dir='dataset/train/train.npz',transform=normalize)
+    val_dataset =  CustomDataset(data_dir='dataset/val/val.npz', transform=normalize)
     # Create a DataLoader instance to load the dataset in batches
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=4)
     val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=4)
-    # H_in, W_in = 12, 1280
-    H_in, W_in = 12, 192
+    H_in, W_in = 12, 1280
+    # H_in, W_in = 12, 192
     model = DCNN(H_in, W_in)
     
     criterion = nn.CrossEntropyLoss()

@@ -4,7 +4,7 @@ import os
 import matplotlib.pyplot as plt
 
 from SWT import compute_swt
-from preprocess import load_or_process_ecg_data
+# from preprocess import load_or_process_ecg_data
 
 
 def plot_ecg_segment(segment, label, fs=250):
@@ -36,16 +36,16 @@ def plot_swt_coeffs(coeff_matrix, time):
     plt.tight_layout()
     plt.show()
     
-if __name__ == "__main__":
-    X_train, y_train, X_test, y_test = load_or_process_ecg_data()
+# if __name__ == "__main__":
+#     X_train, y_train, X_test, y_test = load_or_process_ecg_data()
     
-    for i in range(len(y_train)):
-        if y_train[i] == 0:
-            labelN_train = i
-            break
-    for i in range(len(y_train)):
-        if y_train[i] == 1:
-            labelA_train = i
+#     for i in range(len(y_train)):
+#         if y_train[i] == 0:
+#             labelN_train = i
+#             break
+#     for i in range(len(y_train)):
+#         if y_train[i] == 1:
+#             labelA_train = i
            
     
     # plot_ecg_segment(X_train[labelN_train], "N")   

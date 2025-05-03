@@ -5,8 +5,10 @@ import os
 from sklearn.model_selection import train_test_split
 from scipy.signal import filtfilt, ellip
 from remove_etopic import remove_ectopic_beats
+from visualization import plot_ecg_segment
 
 def extractData(ann_atr, ann_qrs, ecg):
+
     # ann.sample contains the indices of the QRS annotations
     qrs_index = ann_qrs.sample
     max_indices = []
@@ -22,11 +24,9 @@ def extractData(ann_atr, ann_qrs, ecg):
         max_indices.append(start_idx + maximum_idx)
     fs = 250
     max_indices = np.array(max_indices)
-    r_peaks = ecg[max_indices]
-    RR_intervals = np.diff(max_indices) / fs
-    RR_intervals_remove_etopic, kept_indices = remove_ectopic_beats(RR_intervals, return_indices=True)
-    
-    ground_truth_full = np.zeros(len(RR_intervals), dtype=int)
+ 
+# Set labels
+    ground_truth_full = np.zeros(len(ecg), dtype=int)
     ground_truth_index = ann_atr.sample
     for i in range(len(ground_truth_index) - 1):
         ground_idx1 = np.searchsorted(max_indices, ground_truth_index[i], side='right')
@@ -36,16 +36,38 @@ def extractData(ann_atr, ann_qrs, ecg):
             ground_truth_full[ground_idx1:ground_idx2] = 1
         else:
             ground_truth_full[ground_idx1:ground_idx2] = 0
-    ground_truth_filtered = ground_truth_full[kept_indices]
-    modulus = len(RR_intervals_remove_etopic) % 128
-    segment =  RR_intervals_remove_etopic[:len(RR_intervals_remove_etopic) - modulus]
-    segment_128 = segment.reshape((-1, 128))
-    ground_truth_segment = ground_truth_filtered[:len(ground_truth_filtered) - modulus]
-    reshaped_truth = ground_truth_segment.reshape((-1,128))
-    reshaped_truth = np.sum(reshaped_truth, axis=1) > (128 / 2)
-    return segment_128, reshaped_truth, RR_intervals_remove_etopic
 
-def elliptical_bandpass_filter(segment, fs, order=10, lowcut=0.5, highcut=50):
+    # 5 second segment
+    # Define the segment length in samples (5 seconds per segment)
+    segment_length = int(5 * fs)  
+    # Calculate the number of segments
+    num_segments = len(ecg) // segment_length
+    all_segments = []
+    all_labels = []
+    # print("ecg: ", ecg.shape)
+    # print("ground_truth_full: ", len(ground_truth_full))
+    print("num_segments: ", num_segments)
+    for i in range(num_segments):
+        start_idx = i * segment_length
+        end_idx = (i + 1) * segment_length
+
+        # Extract the ECG segment (both channels)
+        segment = ecg[start_idx:end_idx]
+        # filter_segment = elliptical_bandpass_filter(segment)
+        temp = ground_truth_full[start_idx:end_idx]
+        label = 0
+        if np.sum(temp) >= (len(temp)/2):
+            label = 1
+            # plot_ecg_segment(segment, "AF")
+        else:
+            label = 0
+            # plot_ecg_segment(segment, "non-AF")
+            
+        all_segments.append(segment)
+        all_labels.append(label)
+    return all_segments, all_labels
+
+def elliptical_bandpass_filter(segment, fs=250, order=10, lowcut=0.5, highcut=50):
     """
     Apply an elliptical bandpass filter to an ECG segment.
     
@@ -67,7 +89,7 @@ def elliptical_bandpass_filter(segment, fs, order=10, lowcut=0.5, highcut=50):
     b, a = ellip(order, rp=1, rs=40, Wn=[low, high], btype='band')
     return filtfilt(b, a, segment, axis=0)
 
-def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0.0/", output_dir="dataset_128"):
+def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0.0/", output_dir="dataset"):
     """Load ECG data if already processed, otherwise process and store it.
 
     Args:
@@ -106,8 +128,8 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
     os.makedirs(val_dir, exist_ok=True)
     
 
-    manual_label = []
-    segment128 = []
+    all_labels = []
+    all_segments = []
     record_files = [f.split('.')[0] for f in os.listdir(data_path) if f.endswith('.dat')]
     for record_name in record_files:
         hea_path = os.path.join(data_path, record_name + ".hea")
@@ -131,42 +153,45 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
         ann_qrs = wfdb.rdann(os.path.join(data_path, record_name), 'qrs')
         ecg1 = record1.p_signal.flatten()
         fs = record1.fs # frequency
-        segment_128, reshaped_truth, RR_intervals = extractData(ann_atr, ann_qrs, ecg1)
+        segments, labels = extractData(ann_atr, ann_qrs, ecg1)
         
-        segment128.append(segment_128)
-        manual_label.extend(reshaped_truth)
-        # print("segment_128: ", segment_128.shape)
-        print("reshaped_truth: ", reshaped_truth)
+        all_segments.extend(segments)
+        all_labels.extend(labels)
+        # print("all_segments: ", all_segments.shape)
+        # print("all_labels: ", all_labels.shape)
 
         
         
         record2 = wfdb.rdrecord(os.path.join(data_path, record_name), channels=[1]) 
         ecg2 = record2.p_signal.flatten()
-        segment_128, reshaped_truth, RR_intervals = extractData(ann_atr, ann_qrs, ecg2)
-        # print("!!!!! segment: ", segment_128.shape)
-        segment128.append(segment_128)
-        manual_label.extend(reshaped_truth)
+        segments, labels  = extractData(ann_atr, ann_qrs, ecg2)
+        all_segments.extend(segments)
+        all_labels.extend(labels)
+    # print("all_segments: ", all_segments)
+    # print("all_labels: ", all_labels)
         
-    segment128 = np.vstack(segment128)
-    print("segment128: ", segment128.shape)  
-    print("manual_label: ", len(manual_label) )
+    # all_segments = np.vstack(all_segments)
+    print("all_segments: ", len(all_segments)) 
+    print("all_labels: ", len(all_labels) )
     all_AF_labels = []
     all_AF_segments = []
     all_non_labels = []
     all_non_segments = []
-    for i in range(len(manual_label)):
-        if manual_label[i]:
+    for i in range(len(all_labels)):
+        if all_labels[i]:
             all_AF_labels.append(1)
-            all_AF_segments.append(segment128[i,:])
+            all_AF_segments.append(all_segments[i])
         else:
             all_non_labels.append(0)
-            all_non_segments.append(segment128[i,:])
+            all_non_segments.append(all_segments[i])
   
     np.savez('af_data.npz',
          all_AF_labels=np.array(all_AF_labels),
          all_AF_segments=np.array(all_AF_segments),
          all_non_labels=np.array(all_non_labels),
          all_non_segments=np.array(all_non_segments))
+    
+    print("Success!")
     # Xử lý file af_data.npz
 def read_af_data():
     all_segments = []
@@ -211,9 +236,9 @@ def read_af_data():
     # 0.1765 ≈ 15 / 85 to maintain the 70/15/15 split
 
     # Save to .npz files
-    train_file = "dataset_128/train/train.npz"
-    val_file = "dataset_128/val/val.npz"
-    test_file = "dataset_128/test/test.npz"
+    train_file = "dataset/train/train.npz"
+    val_file = "dataset/val/val.npz"
+    test_file = "dataset/test/test.npz"
 
     np.savez(train_file, all_segments=X_train, all_labels=y_train)
     print(f"Training data saved in {train_file}")

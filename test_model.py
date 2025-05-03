@@ -58,8 +58,10 @@ def load_test_performance():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     test_dataset = CustomDataset(data_dir='dataset_128/test/test.npz')  # Update with actual test dataset
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
-    H_in, W_in = 12, 192
-    CHECKPOINT_PATH = "checkpoints_128/best_model.pth"
+    # H_in, W_in = 12, 192
+    H_in, W_in = 12, 1280
+    
+    CHECKPOINT_PATH = "checkpoints/best_model.pth"
     # Load best model checkpoint
     if os.path.exists(CHECKPOINT_PATH):
         model = DCNN(H_in, W_in).to(device)
@@ -93,7 +95,7 @@ def plot_training_accuracy(epochs, train_accs, test_accuracy):
 
 if __name__ =="__main__":
     # Path to checkpoints
-    folder_path = "checkpoints_128/"
+    folder_path = "checkpoints_128_old/"
     dataset_128 = "dataset_128/train/train.npz"
     epochs, train_accs = load_accuracy_npz()
     sensitivity, specificity,accuracy = load_test_performance()

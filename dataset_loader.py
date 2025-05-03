@@ -2,7 +2,10 @@ from SWT import compute_swt
 import torch
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
-
+def normalize(sample):
+    mean = np.mean(sample)
+    std = np.std(sample)
+    return (sample - mean) / std if std > 0 else sample
 class CustomDataset(Dataset):
     def __init__(self, data_dir="test/test_data.npz", transform=None):
         """
@@ -44,7 +47,7 @@ class CustomDataset(Dataset):
 
 if __name__ == "__main__":
     # Create an instance of the dataset
-    dataset = CustomDataset(data_dir='dataset_128/test/test.npz')
+    dataset = CustomDataset(data_dir='dataset/test/test.npz', transform=normalize)
 
     # Create a DataLoader instance to load the dataset in batches
     data_loader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=4)
