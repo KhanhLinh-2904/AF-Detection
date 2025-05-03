@@ -3,7 +3,7 @@ import numpy as np
 import os
 from sklearn.model_selection import train_test_split
 from scipy.signal import filtfilt, ellip
-from hr_analysis import classify_af
+
 
 def bandpass_filter(ecg_signal, fs, lowcut=0.5, highcut=50, order=10):
     """Apply an elliptical band-pass filter to the ECG signal."""

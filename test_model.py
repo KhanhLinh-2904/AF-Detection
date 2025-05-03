@@ -41,11 +41,13 @@ def evaluate_model(model, test_loader, device):
     # Compute Sensitivity (Recall) and Specificity
     sensitivity = TP / (TP + FN) if (TP + FN) > 0 else 0
     specificity = TN / (TN + FP) if (TN + FP) > 0 else 0
+    # Compute Accuracy
+    accuracy = (TP + TN) / (TP + TN + FP + FN) if (TP + TN + FP + FN) > 0 else 0
 
     print(f"Sensitivity (Recall): {sensitivity:.4f}")
     print(f"Specificity: {specificity:.4f}")
 
-    return sensitivity, specificity
+    return sensitivity, specificity, accuracy
 
 if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -61,6 +63,7 @@ if __name__ == "__main__":
     # Load best model checkpoint
     if os.path.exists(CHECKPOINT_PATH):
         model = load_model(CHECKPOINT_PATH, H_in, W_in, device)
-        sensitivity, specificity = evaluate_model(model, test_loader, device)
+        sensitivity, specificity, accuracy = evaluate_model(model, test_loader, device)
+        print("sensitivity, specificity, accuracy: ", sensitivity, specificity, accuracy)
     else:
         print(f"Checkpoint not found at {CHECKPOINT_PATH}")
