@@ -9,35 +9,7 @@ from visualization import plot_ecg_segment
 
 def extractData(ann_atr, ann_qrs, ecg):
 
-    # ann.sample contains the indices of the QRS annotations
-    qrs_index = ann_qrs.sample
-    max_indices = []
-    for i in range(len(qrs_index) - 1):
-        if qrs_index[i] > len(ecg) or qrs_index[i + 1] > len(ecg):
-            break
-        start_idx = qrs_index[i]
-        end_idx = qrs_index[i + 1]
-        if start_idx < 0:
-            start_idx = 0
-        segment = ecg[start_idx:end_idx]
-        maximum_idx = np.argmax(segment)
-        max_indices.append(start_idx + maximum_idx)
     fs = 250
-    max_indices = np.array(max_indices)
- 
-# Set labels
-    ground_truth_full = np.zeros(len(ecg), dtype=int)
-    ground_truth_index = ann_atr.sample
-    for i in range(len(ground_truth_index) - 1):
-        ground_idx1 = np.searchsorted(max_indices, ground_truth_index[i], side='right')
-        ground_idx2 = np.searchsorted(max_indices, ground_truth_index[i + 1], side='right')
-        label = ann_atr.aux_note[i].replace('(', '').replace(')', '')
-        if label == 'AFIB':
-            ground_truth_full[ground_idx1:ground_idx2] = 1
-        else:
-            ground_truth_full[ground_idx1:ground_idx2] = 0
-
-    # 5 second segment
     # Define the segment length in samples (5 seconds per segment)
     segment_length = int(5 * fs)  
     # Calculate the number of segments
@@ -53,18 +25,17 @@ def extractData(ann_atr, ann_qrs, ecg):
 
         # Extract the ECG segment (both channels)
         segment = ecg[start_idx:end_idx]
-        # filter_segment = elliptical_bandpass_filter(segment)
-        temp = ground_truth_full[start_idx:end_idx]
-        label = 0
-        if np.sum(temp) >= (len(temp)/2):
-            label = 1
-            # plot_ecg_segment(segment, "AF")
-        else:
-            label = 0
-            # plot_ecg_segment(segment, "non-AF")
-            
-        all_segments.append(segment)
-        all_labels.append(label)
+        for j in range(len(ann_atr.sample)):
+            if start_idx <= ann_atr.sample[j] < end_idx:
+                label_note = ann_atr.aux_note[j][1]
+                if label_note == "N":
+                    label = 0
+                else:
+                    label = 1
+                #    print("start_idx--- atr---- end_idx---- label: ",start_idx, ann.sample[j] , end_idx,label)
+                all_segments.append(segment)
+                all_labels.append(label)
+
     return all_segments, all_labels
 
 def elliptical_bandpass_filter(segment, fs=250, order=10, lowcut=0.5, highcut=50):
@@ -208,16 +179,18 @@ def read_af_data():
     print("all_non_segments: ", len(all_non_segments))   
     total_samples = len(all_AF_labels) 
     print("total_samples: ", total_samples)       
-    # Lấy random index
-    random_indices = random.sample(range(len(all_non_labels)), total_samples)
-    # Lấy mẫu dựa trên chỉ số
-    new_non_labels = [all_non_labels[i] for i in random_indices]
-    new_non_segments = [all_non_segments [i] for i in random_indices]
-    print(" new_non_labels:  ", len(new_non_labels))
+    # # Lấy random index
+    # random_indices = random.sample(range(len(all_non_labels)), total_samples)
+    # # Lấy mẫu dựa trên chỉ số
+    # new_non_labels = [all_non_labels[i] for i in random_indices]
+    # new_non_segments = [all_non_segments [i] for i in random_indices]
+    # print(" new_non_labels:  ", len(new_non_labels))
     
-    all_segments.extend(new_non_segments)
+    # all_segments.extend(new_non_segments)
+    all_segments.extend(all_non_segments)
     all_segments.extend(all_AF_segments)
-    all_labels.extend(new_non_labels)
+    # all_labels.extend(new_non_labels)
+    all_labels.extend(all_non_labels)
     all_labels.extend(all_AF_labels)
     
     # Convert lists to NumPy arrays

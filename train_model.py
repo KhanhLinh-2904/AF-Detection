@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader
 CHECKPOINT_DIR = "checkpoints"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-PATIENCE = 20  # Stop if training loss doesn't improve for 20 epochs
+PATIENCE = 30  # Stop if training loss doesn't improve for 20 epochs
 
 def get_latest_checkpoint():
     """Find the latest checkpoint file."""
@@ -99,10 +99,10 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
         else:
             no_improve_epochs += 1
 
-        # # Early stopping
-        # if no_improve_epochs >= PATIENCE:
-        #     print(f"Early stopping at epoch {epoch+1}. Best model at epoch {best_epoch} with train loss {best_train_loss:.4f}.")
-        #     break
+        # Early stopping
+        if no_improve_epochs >= PATIENCE:
+            print(f"Early stopping at epoch {epoch+1}. Best model at epoch {best_epoch} with train loss {best_train_loss:.4f}.")
+            break
 
     # Plot training and validation loss
     plt.figure(figsize=(10, 5))
@@ -120,12 +120,14 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
 # Load data
 if __name__ == "__main__":
     # Create an instance of the dataset
-    train_dataset = CustomDataset(data_dir='dataset/train/train.npz',transform=normalize)
-    val_dataset =  CustomDataset(data_dir='dataset/val/val.npz', transform=normalize)
+    train_dataset = CustomDataset(data_dir='dataset/train/train.npz')
+    val_dataset =  CustomDataset(data_dir='dataset/val/val.npz')
     # Create a DataLoader instance to load the dataset in batches
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=4)
     val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=4)
     H_in, W_in = 12, 1280
+    # H_in, W_in = 12, 256
+    
     # H_in, W_in = 12, 192
     model = DCNN(H_in, W_in)
     
