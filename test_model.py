@@ -53,7 +53,7 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load test dataset
-    test_dataset = CustomDataset(data_dir='dataset/test/test_data.npz')  # Update with actual test dataset
+    test_dataset = CustomDataset(data_dir='dataset_5s/test/test_data.npz')  # Update with actual test dataset
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
 
     # Model input size (same as training)
