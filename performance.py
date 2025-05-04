@@ -69,6 +69,7 @@ if __name__ == "__main__":
     # Load best model checkpoint
     if os.path.exists(CHECKPOINT_PATH):
         model = load_model(CHECKPOINT_PATH, H_in, W_in, device)
-        sensitivity, specificity,_ = evaluate_model(model, test_loader, device)
+        sensitivity, specificity, accuracy = evaluate_model(model, test_loader, device)
+        print("sensitivity, specificity, accuracy: ", sensitivity, specificity, accuracy)
     else:
         print(f"Checkpoint not found at {CHECKPOINT_PATH}")

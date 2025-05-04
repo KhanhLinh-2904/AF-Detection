@@ -22,20 +22,19 @@ def get_latest_checkpoint():
     checkpoints.sort(key=lambda x: int(x.split('_')[1].split('.')[0]))  # Sort by epoch number
     return os.path.join(CHECKPOINT_DIR, checkpoints[-1])
 
-# Training function with checkpoint saving
 def train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=100):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
     start_epoch = 0
-    best_val_loss = float("inf")
+    best_train_loss = float("inf")
     best_epoch = 0
     train_losses = []
     val_losses = []
     no_improve_epochs = 0
 
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
-    
+
     # Load latest checkpoint if available
     latest_checkpoint = get_latest_checkpoint()
     if latest_checkpoint:
@@ -43,7 +42,7 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
         model.load_state_dict(checkpoint['model_state'])
         optimizer.load_state_dict(checkpoint['optimizer_state'])
         start_epoch = checkpoint['epoch'] + 1
-        best_loss = checkpoint.get('best_loss', best_loss)
+        best_train_loss = checkpoint.get('best_train_loss', best_train_loss)
         best_epoch = checkpoint.get('best_epoch', best_epoch)
         print(f"Resuming training from epoch {start_epoch}")
 
@@ -88,23 +87,23 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
             'optimizer_state': optimizer.state_dict(),
             'train_loss': avg_train_loss,
             'val_loss': avg_val_loss,
-            'best_val_loss': best_val_loss,
+            'best_train_loss': best_train_loss,
             'best_epoch': best_epoch
         }, checkpoint_path)
 
-        # Track best validation model
-        if avg_val_loss < best_val_loss:
-            best_val_loss = avg_val_loss
+        # Track best training model
+        if avg_train_loss < best_train_loss:
+            best_train_loss = avg_train_loss
             best_epoch = epoch + 1
             no_improve_epochs = 0
             torch.save(model.state_dict(), os.path.join(CHECKPOINT_DIR, "best_model.pth"))
-            print(f"New best model saved at epoch {best_epoch} with val loss {best_val_loss:.4f}")
+            print(f"New best model saved at epoch {best_epoch} with train loss {best_train_loss:.4f}")
         else:
             no_improve_epochs += 1
 
-        # Early stopping
+        # Early stopping based on training loss
         if no_improve_epochs >= PATIENCE:
-            print(f"Early stopping at epoch {epoch+1}. Best model at epoch {best_epoch} with val loss {best_val_loss:.4f}.")
+            print(f"Early stopping at epoch {epoch+1}. Best model at epoch {best_epoch} with train loss {best_train_loss:.4f}.")
             break
 
     # Plot training and validation loss

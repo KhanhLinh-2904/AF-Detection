@@ -37,7 +37,7 @@ def plot_swt_coeffs(coeff_matrix, time):
     plt.show()
     
 if __name__ == "__main__":
-    X_train, y_train, X_test, y_test = load_or_process_ecg_data()
+    X_train, y_train, X_test, y_test, X_val, y_val = load_or_process_ecg_data()
     
     for i in range(len(y_train)):
         if y_train[i] == 0:
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # plot_ecg_segment(X_test[labelA_test], "A")   
     
     coeff_matrix_normalized = compute_swt(X_train[labelN_train], J=6, wavelet='db5')
-    num_samples = 256
+    num_samples = 192
     # Find the overall max and min values
     max_value = np.max(coeff_matrix_normalized)
     min_value = np.min(coeff_matrix_normalized)

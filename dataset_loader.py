@@ -2,9 +2,12 @@ from SWT import compute_swt
 import torch
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
-
+def normalize(sample):
+    mean = np.mean(sample)
+    std = np.std(sample)
+    return (sample - mean) / std if std > 0 else sample
 class CustomDataset(Dataset):
-    def __init__(self, data_dir="test/test_data.npz", transform=None):
+    def __init__(self, data_dir="test/test_data.npz", transform=normalize):
         """
         Args:
             data_dir (str): Path to the dataset directory containing the npz file with 'all_segments' and 'all_labels'.

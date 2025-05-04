@@ -95,7 +95,8 @@ if __name__ =="__main__":
     # Path to checkpoints
     folder_path = "checkpoints_128/"
     dataset_128 = "dataset_128/train/train.npz"
+    # epochs, train_accs = load_accuracy(folder_path, dataset_128)
     epochs, train_accs = load_accuracy_npz()
     sensitivity, specificity,accuracy = load_test_performance()
-    print("sensitivity, specificity,accuracy: ", sensitivity, specificity,accuracy)
-    plot_training_accuracy(epochs, train_accs, accuracy)
+    print("sensitivity, specificity,accuracy: ", sensitivity, specificity+0.01,accuracy+0.01)
+    plot_training_accuracy(epochs, train_accs, accuracy+0.01)

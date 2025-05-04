@@ -81,9 +81,9 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
     train_dir = os.path.join(output_dir, "train")
     test_dir = os.path.join(output_dir, "test")
     val_dir = os.path.join(output_dir, "val")
-    train_file = os.path.join(train_dir, "train_data.npz")
-    test_file = os.path.join(test_dir, "test_data.npz")
-    val_file = os.path.join(val_dir, "val_data.npz")
+    train_file = os.path.join(train_dir, "train.npz")
+    test_file = os.path.join(test_dir, "test.npz")
+    val_file = os.path.join(val_dir, "val.npz")
 
     # Check if data is already processed
     if os.path.exists(train_file) and os.path.exists(test_file) and os.path.exists(val_file):
@@ -94,7 +94,7 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
         val_data = np.load(val_file)
         X_train, y_train = train_data["all_segments"], train_data["all_labels"]
         X_test, y_test = test_data["all_segments"], test_data["all_labels"]
-        X_val, y_val = test_data["all_segments"], test_data["all_labels"]
+        X_val, y_val = val_data["all_segments"], val_data["all_labels"]
         print("Data loaded successfully.")
         return X_train, y_train, X_test, y_test, X_val, y_val
 
@@ -243,5 +243,5 @@ if __name__ == "__main__":
     # print("N test:",len(num_N))
     # print("A test:",len(num_A))
 
-    # load_or_process_ecg_data()
+    load_or_process_ecg_data()
     read_af_data()
