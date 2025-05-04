@@ -2,57 +2,35 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import os
+import numpy as np
 import matplotlib.pyplot as plt
 from DCNN import DCNN
 from dataset_loader import CustomDataset
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, Subset
+from sklearn.model_selection import KFold
 
-# Directory to store checkpoints
-CHECKPOINT_DIR = "checkpoints_5s"
-os.makedirs(CHECKPOINT_DIR, exist_ok=True)
+# Parameters
+NUM_EPOCHS = 100
+BATCH_SIZE = 32
+NUM_WORKERS = 4
+K_FOLDS = 5
+LEARNING_RATE = 0.001
+H_in, W_in = 12, 1280
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Early stopping parameters
-PATIENCE = 20  # Stop training if no improvement after X epochs
+def train_one_fold(model, train_loader, val_loader, fold):
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
-def get_latest_checkpoint():
-    """Find the latest checkpoint file."""
-    checkpoints = [f for f in os.listdir(CHECKPOINT_DIR) if f.endswith(".pth")]
-    if not checkpoints:
-        return None
-    checkpoints.sort(key=lambda x: int(x.split('_')[1].split('.')[0]))  # Sort by epoch number
-    return os.path.join(CHECKPOINT_DIR, checkpoints[-1])
+    train_losses, val_losses = [], []
+    best_val_loss = float('inf')
 
-def train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=100):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.to(device)
-
-    start_epoch = 0
-    best_val_loss = float("inf")
-    best_epoch = 0
-    train_losses = []
-    val_losses = []
-    no_improve_epochs = 0
-
-    os.makedirs(CHECKPOINT_DIR, exist_ok=True)
-    
-    # Load latest checkpoint if available
-    latest_checkpoint = get_latest_checkpoint()
-    if latest_checkpoint:
-        checkpoint = torch.load(latest_checkpoint)
-        model.load_state_dict(checkpoint['model_state'])
-        optimizer.load_state_dict(checkpoint['optimizer_state'])
-        start_epoch = checkpoint['epoch'] + 1
-        best_loss = checkpoint.get('best_loss', best_loss)
-        best_epoch = checkpoint.get('best_epoch', best_epoch)
-        print(f"Resuming training from epoch {start_epoch}")
-
-    for epoch in range(start_epoch, num_epochs):
-        # --- Training ---
+    for epoch in range(NUM_EPOCHS):
         model.train()
         train_loss = 0.0
         for inputs, labels in train_loader:
-            inputs = inputs.unsqueeze(1).to(device).float()
-            labels = labels.to(device)
+            inputs = inputs.unsqueeze(1).to(DEVICE).float()
+            labels = labels.to(DEVICE)
 
             optimizer.zero_grad()
             outputs = model(inputs)
@@ -63,76 +41,61 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
         avg_train_loss = train_loss / len(train_loader)
         train_losses.append(avg_train_loss)
 
-        # --- Validation ---
         model.eval()
         val_loss = 0.0
         with torch.no_grad():
             for inputs, labels in val_loader:
-                inputs = inputs.unsqueeze(1).to(device).float()
-                labels = labels.to(device)
-
+                inputs = inputs.unsqueeze(1).to(DEVICE).float()
+                labels = labels.to(DEVICE)
                 outputs = model(inputs)
                 loss = criterion(outputs, labels)
                 val_loss += loss.item()
         avg_val_loss = val_loss / len(val_loader)
         val_losses.append(avg_val_loss)
 
-        print(f"Epoch [{epoch+1}/{num_epochs}] - Train Loss: {avg_train_loss:.4f}, Val Loss: {avg_val_loss:.4f}")
+        print(f"[Fold {fold}] Epoch [{epoch+1}/{NUM_EPOCHS}] - Train Loss: {avg_train_loss:.4f}, Val Loss: {avg_val_loss:.4f}")
 
-        # Save checkpoint
-        checkpoint_path = os.path.join(CHECKPOINT_DIR, f"epoch_{epoch+1}.pth")
-        torch.save({
-            'epoch': epoch,
-            'model_state': model.state_dict(),
-            'optimizer_state': optimizer.state_dict(),
-            'train_loss': avg_train_loss,
-            'val_loss': avg_val_loss,
-            'best_val_loss': best_val_loss,
-            'best_epoch': best_epoch
-        }, checkpoint_path)
-
-        # Track best validation model
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
-            best_epoch = epoch + 1
-            no_improve_epochs = 0
-            torch.save(model.state_dict(), os.path.join(CHECKPOINT_DIR, "best_model.pth"))
-            print(f"New best model saved at epoch {best_epoch} with val loss {best_val_loss:.4f}")
-        else:
-            no_improve_epochs += 1
+            torch.save(model.state_dict(), f"best_model_fold_{fold}.pth")
 
-        # Early stopping
-        if no_improve_epochs >= PATIENCE:
-            print(f"Early stopping at epoch {epoch+1}. Best model at epoch {best_epoch} with val loss {best_val_loss:.4f}.")
-            break
+    return train_losses, val_losses
 
-    # Plot training and validation loss
+def cross_validate():
+    dataset = CustomDataset(data_dir='dataset_5s/train/train_data.npz')
+    kfold = KFold(n_splits=K_FOLDS, shuffle=True, random_state=42)
+
+    all_train_losses, all_val_losses = [], []
+
+    for fold, (train_idx, val_idx) in enumerate(kfold.split(dataset)):
+        print(f"\n--- Fold {fold + 1}/{K_FOLDS} ---")
+
+        train_subset = Subset(dataset, train_idx)
+        val_subset = Subset(dataset, val_idx)
+
+        train_loader = DataLoader(train_subset, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS)
+        val_loader = DataLoader(val_subset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS)
+
+        model = DCNN(H_in, W_in).to(DEVICE)
+        train_losses, val_losses = train_one_fold(model, train_loader, val_loader, fold + 1)
+
+        all_train_losses.append(train_losses)
+        all_val_losses.append(val_losses)
+
+    # Plot averaged loss curves
+    avg_train = np.mean([np.array(losses) for losses in all_train_losses], axis=0)
+    avg_val = np.mean([np.array(losses) for losses in all_val_losses], axis=0)
+
     plt.figure(figsize=(10, 5))
-    plt.plot(train_losses, label='Training Loss')
-    plt.plot(val_losses, label='Validation Loss')
-    plt.title('Training and Validation Loss over Epochs')
+    plt.plot(avg_train, label='Average Train Loss')
+    plt.plot(avg_val, label='Average Val Loss')
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
+    plt.title(f'{K_FOLDS}-Fold Cross-Validation Loss')
     plt.legend()
     plt.grid()
-    plot_path = os.path.join(CHECKPOINT_DIR, "loss_plot.png")
-    plt.savefig(plot_path)
+    plt.savefig("cross_val_loss_plot.png")
     plt.show()
-    print(f"Loss plot saved at {plot_path}")
 
-# Load data
 if __name__ == "__main__":
-    # Create an instance of the dataset
-    train_dataset = CustomDataset(data_dir='dataset_5s/train/train_data.npz')
-    val_dataset =  CustomDataset(data_dir='dataset_5s/val/val_data.npz')
-    # Create a DataLoader instance to load the dataset in batches
-    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=4)
-    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=4)
-    
-    # H_in, W_in = 12, 1280
-    H_in, W_in = 12, 256
-    model = DCNN(H_in, W_in)
-    
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
-    train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=200)
+    cross_validate()

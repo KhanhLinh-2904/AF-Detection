@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from scipy.signal import filtfilt, ellip
 
 
+
 def bandpass_filter(ecg_signal, fs, lowcut=0.5, highcut=50, order=10):
     """Apply an elliptical band-pass filter to the ECG signal."""
     nyquist = 0.5 * fs
@@ -28,28 +29,23 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
     # Define train/test folders
     train_dir = os.path.join(output_dir, "train")
     test_dir = os.path.join(output_dir, "test")
-    val_dir = os.path.join(output_dir, "val")
     train_file = os.path.join(train_dir, "train_data.npz")
     test_file = os.path.join(test_dir, "test_data.npz")
-    val_file = os.path.join(val_dir, "val_data.npz")    
     # Check if data is already processed
-    if os.path.exists(train_file) and os.path.exists(test_file) and os.path.exists(val_file):
+    if os.path.exists(train_file) and os.path.exists(test_file):
         print("Processed data found. Loading data...")
 
         train_data = np.load(train_file)
         test_data = np.load(test_file)
-        val_data = np.load(val_file)
         X_train, y_train = train_data["all_segments"], train_data["all_labels"]
         X_test, y_test = test_data["all_segments"], test_data["all_labels"]
-        X_val, y_val = val_data["all_segments"], val_data["all_labels"]
         print("Data loaded successfully.")
-        return X_train, y_train, X_test, y_test, X_val, y_val
+        return X_train, y_train, X_test, y_test
     print("Processed data not found. Processing raw ECG data...")
 
     # Create output directories if they don't exist
     os.makedirs(train_dir, exist_ok=True)
     os.makedirs(test_dir, exist_ok=True)
-    os.makedirs(val_dir, exist_ok=True)
     
 
     # Get all record names that have .dat files
@@ -80,7 +76,7 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
         fs = record[1]['fs']  # Sampling frequency
 
         # Define the segment length in samples (5 seconds per segment)
-        segment_length = int(1 * fs)  
+        segment_length = int(5 * fs)  
         # Calculate the number of segments
         num_segments = len(ecg_signal) // segment_length
         
@@ -114,45 +110,26 @@ def load_or_process_ecg_data(data_path="mit-bih-atrial-fibrillation-database-1.0
     all_segments = np.array(all_segments)  # Shape: (num_segments, 5*fs, 2)
     all_labels = np.array(all_labels)
 
-   # Step 1: Split into train (75%) and temp (25%)
-    X_train, X_temp, y_train, y_temp = train_test_split(all_segments, all_labels, test_size=0.25, random_state=42)
+  # Split into 80% train and 20% test
+    X_train, X_test, y_train, y_test = train_test_split(all_segments, all_labels, test_size=0.2, random_state=42)
 
-    # Step 2: Split temp into val (15%) and test (10%) -> 0.6 x 0.25 = 0.15, 0.4 x 0.25 = 0.10
-    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.4, random_state=42)
-
-
-    # Save training data
     np.savez(train_file, all_segments=X_train, all_labels=y_train)
     print(f"Training data saved in {train_file}")
     
-    np.savez(val_file, all_segments=X_val, all_labels=y_val)
-    print(f"Validation data saved in {val_file}")
-
-    # Save testing data
     np.savez(test_file, all_segments=X_test, all_labels=y_test)
     print(f"Testing data saved in {test_file}")
 
-    return X_train, y_train, X_test, y_test, X_val, y_val
-
+    return X_train, y_train, X_test, y_test
 
 # Call the function
 if __name__ == "__main__":
-    X_train, y_train, X_test, y_test, X_val, y_val = load_or_process_ecg_data()
+    X_train, y_train, X_test, y_test = load_or_process_ecg_data()
     print("X_train: ", X_train.shape)
     num_N = [i for i in y_train if i ==0]
     num_A = [i for i in y_train if i ==1]
-
     print("N train:",len(num_N))
     print("A train:",len(num_A))
 
-   
-    
-    print("X_val: ", X_val.shape)
-    num_N = [i for i in y_val if i ==0]
-    num_A = [i for i in y_val if i ==1]
-
-    print("N val:",len(num_N))
-    print("A val:",len(num_A))
     
     print("X_test: ", X_test.shape)
     num_N = [i for i in y_test if i ==0]

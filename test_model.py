@@ -9,7 +9,7 @@ from DCNN import DCNN
 from dataset_loader import CustomDataset
 
 # Path to the best checkpoint
-CHECKPOINT_PATH = "checkpoints/best_model.pth"
+CHECKPOINT_PATH = "best_model_fold_1.pth"
 
 def load_model(checkpoint_path, H_in, W_in, device):
     """Load the best model from checkpoint."""

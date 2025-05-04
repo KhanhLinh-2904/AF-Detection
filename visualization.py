@@ -15,7 +15,7 @@ def plot_ecg_segment(segment, label, fs=250):
     plt.plot(time_axis, segment, label=f"Label: {label}")
     plt.xlabel("Time (seconds)")
     plt.ylabel("Amplitude")
-    plt.title("ECG Segment in Test dataset")
+    plt.title("ECG Segment in dataset")
     plt.legend()
     plt.grid()
     plt.show()
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # plot_ecg_segment(X_test[labelA_test], "A")   
     
     coeff_matrix_normalized = compute_swt(X_train[labelN_train], J=6, wavelet='db5')
-    num_samples = 256
+    num_samples = 1280
     # Find the overall max and min values
     max_value = np.max(coeff_matrix_normalized)
     min_value = np.min(coeff_matrix_normalized)
